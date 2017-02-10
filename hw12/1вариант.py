@@ -1,20 +1,23 @@
 import re
 
-with open('Украина — Википедия.html', 'r', encoding = 'utf-8') as f:
+def reads_file():
+    f = open('komar.txt', 'r', encoding = 'UTF-8')
     text = f.read()
-    for word in text:
-        r = re.search('\<td[^а-яА-Я]*Столица.*[^а-яА-Я]*([а-яА-Я]+)', word)
-        group = ''
-        if r:
-            group = r.group(1)
-
-def add_to_file(group):
-    f = open('capital.txt', 'a')
-    f.write(group)
     f.close()
+    return text
+
+def new_file(result):
+    f = open('slon.txt', 'w', encoding = 'UTF-8')
+    f.write(result)
+    f.close()
+    
+def change(text):
+    text1 = re.sub('комар((а(м(и)?|х)?|ы|о(в|м)|е|у)|( |\.|,|\)|:|;|\?|!|\n|\t\|»|-))', r'слон\1', text)
+    text2 = re.sub('Комар((а(м(и)?|х)?|ы|о(в|м)|е|у)|( |\.|,|\)|:|;|\?|!|\n|\t\|»|-))', r'Слон\1', text1)
+    return text2
 
 def main():
-    add_to_file(group)
-    
+    new_file(change(reads_file()))
+
 if __name__ == '__main__':
     main()
